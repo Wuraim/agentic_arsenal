@@ -6,14 +6,18 @@ workflows (AIP-88).
 Standalone Cursor plugin repository — install by cloning or adding as a Cursor
 plugin source.
 
-Personal tech stacks and product-specific design tools are **not** baked into
-this plugin; supply them as conversation context when needed.
+Concrete toolchains (Figma vs FigCraft, package managers, linters) are **not**
+hardcoded here — supply them as conversation or project context. Plugin skills
+define process cards (design access, quality, verify CLI) that agents fill from
+that context.
 
 ## Layout
 
 ```
 .
-├── .cursor-plugin/plugin.json   # displayName, description, skills/rules/hooks
+├── .cursor-plugin/
+│   ├── marketplace.json         # Import Marketplace index (lists this plugin)
+│   └── plugin.json              # displayName, description, skills/rules/hooks
 ├── rules/                       # always-apply mdc → skills + verify before Done
 ├── skills/                      # SKILL.md per domain
 ├── scripts/                     # Python implementations (metrics, checklist)
@@ -28,14 +32,31 @@ this plugin; supply them as conversation context when needed.
 
 | Skill | Trigger |
 |---|---|
-| `visual-quality-gate` | Any visual UI change — proof vs design SoT from context |
-| `verify-handoff` | Before Done — gates G0–G6 (criteria from context) |
+| `design-source-access` | Locate/use design SoT (Figma, FigCraft, mockups, … from context) |
+| `visual-quality-gate` | Any visual UI change — proof vs design SoT |
+| `code-quality` | Lint/format/typecheck/tests — commands from context |
+| `verify-handoff` | Before Done — gates G0–G6 |
+| `create-verify-cli` | Author versioned project verify CLI wired to handoff gates |
 | `no-disposable-scripts` | Prefer versioned CLI over `/tmp` bash |
 | `code-metrics` | Conventions + JSONL append/summarize; hooks auto-record |
 
 ## Install / activate in Cursor
 
-### As a dedicated plugin repo
+### Import Marketplace (recommended)
+
+Cursor **Import Marketplace** needs `.cursor-plugin/marketplace.json` (this repo
+ships one that points at the root plugin via `"source": "."`).
+
+1. In Cursor: **Customize → Plugins → Import Marketplace** (or equivalent).
+2. Paste: `https://github.com/Wuraim/agentic_arsenal`
+3. Choose **User** scope (personal install).
+4. After import, search **Agentic Dev Toolkit** (or `agentic-dev-toolkit`) and
+   **Install** / enable it.
+
+Private repos: install the **Cursor GitHub App** on `Wuraim/agentic_arsenal`
+(read access) so Cursor can index the marketplace.
+
+### As a dedicated plugin repo (local / workspace)
 
 1. Clone this repository (or add it as a Cursor plugin / workspace folder).
 2. Cursor reads `.cursor-plugin/plugin.json` at the plugin root.

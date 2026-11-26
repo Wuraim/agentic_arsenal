@@ -1,0 +1,41 @@
+{
+  "name": "agentic-arsenal",
+  "owner": {
+    "name": "Wuraim"
+  },
+  "metadata": {
+    "description": "Agentic Dev Toolkit marketplace — skills, rules, hooks, and CLI for agentic workflows",
+    "version": "0.2.0"
+  },
+  "plugins": [
+    {
+      "name": "agentic-dev-toolkit",
+      "source": ".",
+      "description": "Cross-cutting agent skills and toolbox: verify-handoff, visual QA, no disposable scripts, code-metrics hooks and summarize CLI (AIP-88).",
+      "version": "0.2.0",
+      "author": {
+        "name": "Wuraim",
+        "url": "https://github.com/Wuraim"
+      },
+      "repository": "https://github.com/Wuraim/agentic_arsenal",
+      "license": "MIT",
+      "keywords": [
+        "agentic",
+        "arsenal",
+        "skills",
+        "verify",
+        "metrics",
+        "hooks",
+        "toolbox"
+      ],
+      "category": "developer-tools",
+      "tags": [
+        "automation",
+        "skills",
+        "verification",
+        "cli",
+        "metrics"
+      ]
+    }
+  ]
+}
