@@ -15,7 +15,9 @@ that context.
 
 ```
 .
-├── .cursor-plugin/plugin.json   # displayName, description, skills/rules/hooks
+├── .cursor-plugin/
+│   ├── marketplace.json         # Import Marketplace index (lists this plugin)
+│   └── plugin.json              # displayName, description, skills/rules/hooks
 ├── rules/                       # always-apply mdc → skills + verify before Done
 ├── skills/                      # SKILL.md per domain
 ├── scripts/                     # Python implementations (metrics, checklist)
@@ -40,7 +42,21 @@ that context.
 
 ## Install / activate in Cursor
 
-### As a dedicated plugin repo
+### Import Marketplace (recommended)
+
+Cursor **Import Marketplace** needs `.cursor-plugin/marketplace.json` (this repo
+ships one that points at the root plugin via `"source": "."`).
+
+1. In Cursor: **Customize → Plugins → Import Marketplace** (or equivalent).
+2. Paste: `https://github.com/Wuraim/agentic_arsenal`
+3. Choose **User** scope (personal install).
+4. After import, search **Agentic Dev Toolkit** (or `agentic-dev-toolkit`) and
+   **Install** / enable it.
+
+Private repos: install the **Cursor GitHub App** on `Wuraim/agentic_arsenal`
+(read access) so Cursor can index the marketplace.
+
+### As a dedicated plugin repo (local / workspace)
 
 1. Clone this repository (or add it as a Cursor plugin / workspace folder).
 2. Cursor reads `.cursor-plugin/plugin.json` at the plugin root.
