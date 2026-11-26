@@ -47,4 +47,4 @@ Mark each applicable gate pass/fail. Attach artefacts (screenshots, check logs).
 
 ## Related skills
 
-- `visual-quality-gate`, `no-disposable-scripts`, `code-metrics`
+- `design-source-access`, `visual-quality-gate`, `code-quality`, `create-verify-cli`, `no-disposable-scripts`, `code-metrics`

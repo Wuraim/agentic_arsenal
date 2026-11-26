@@ -11,22 +11,23 @@ This repository ships the Cursor plugin Agentic Dev Toolkit (see `.cursor-plugin
 
 | Trigger | Skill path |
 |---|---|
+| Design SoT / mockup access (Figma, FigCraft, …) | `skills/design-source-access/SKILL.md` |
 | Any visual UI change | `skills/visual-quality-gate/SKILL.md` |
+| Lint/format/typecheck/tests for this project | `skills/code-quality/SKILL.md` |
 | Before Done / merge | `skills/verify-handoff/SKILL.md` |
+| Need a project verify CLI (not disposable bash) | `skills/create-verify-cli/SKILL.md` |
 | Any automation need | `skills/no-disposable-scripts/SKILL.md` |
 | Measuring task signals / model routing data | `skills/code-metrics/SKILL.md` |
-| Create/update a skill in a consumer repo | `skills/create-project-skill/SKILL.md` |
 
-Stack-specific conventions (languages, frameworks, design tools) belong in the **consumer repo** as project-local skills (`.cursor/skills/…`) or conversation context — not in this shareable plugin. Use `create-project-skill` to author them.
+Concrete toolchains (exact design product, package manager, linters) come from **conversation or consumer-repo context**. These skills define the process cards; they do not hardcode one stack.
 
 Paths are relative to this plugin root (or `.cursor-plugin/agentic-dev-toolkit/` when vendored).
 
 ## Hard rules
 
 1. **Verify before Done** — run applicable gates; call `bin/verify-checklist`. Fill gate criteria from the stack/design SoT stated in context.
-2. **No disposable scripts** — use `bin/` / `tools/` / repo CLI; extend them in-repo instead of `/tmp` bash.
-3. **Do not reactivate Hindsight** — that plugin stays disabled (AIP-82).
-4. Prefer toolbox bins under this plugin over one-off shell.
+2. **No disposable scripts** — use `bin/` / `tools/` / repo CLI; extend them in-repo instead of `/tmp` bash. Prefer `create-verify-cli` when verify is recurrent.
+3. Prefer toolbox bins under this plugin over one-off shell.
 
 ## Toolbox entry points
 

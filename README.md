@@ -4,12 +4,12 @@ Cross-cutting skills, rules, hooks, and a minimal versioned CLI for agentic
 workflows (AIP-88).
 
 Standalone Cursor plugin repository — install by cloning or adding as a Cursor
-plugin source. Does **not** include or reactivate Hindsight.
+plugin source.
 
-Personal tech stacks and product-specific design tools are **not** baked into
-this plugin. Capture them in the **consumer repo** with skill
-`create-project-skill` (writes `.cursor/skills/…`), or supply them as
-conversation context when needed.
+Concrete toolchains (Figma vs FigCraft, package managers, linters) are **not**
+hardcoded here — supply them as conversation or project context. Plugin skills
+define process cards (design access, quality, verify CLI) that agents fill from
+that context.
 
 ## Layout
 
@@ -30,11 +30,13 @@ conversation context when needed.
 
 | Skill | Trigger |
 |---|---|
-| `visual-quality-gate` | Any visual UI change — proof vs design SoT from context |
-| `verify-handoff` | Before Done — gates G0–G6 (criteria from context) |
+| `design-source-access` | Locate/use design SoT (Figma, FigCraft, mockups, … from context) |
+| `visual-quality-gate` | Any visual UI change — proof vs design SoT |
+| `code-quality` | Lint/format/typecheck/tests — commands from context |
+| `verify-handoff` | Before Done — gates G0–G6 |
+| `create-verify-cli` | Author versioned project verify CLI wired to handoff gates |
 | `no-disposable-scripts` | Prefer versioned CLI over `/tmp` bash |
 | `code-metrics` | Conventions + JSONL append/summarize; hooks auto-record |
-| `create-project-skill` | Author stack/workflow skills in a **consumer** repo (`.cursor/skills/`) |
 
 ## Install / activate in Cursor
 
