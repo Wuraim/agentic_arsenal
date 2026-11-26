@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Versioned toolbox entry: verify-handoff gates. Prefer this over disposable bash.
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+exec python3 "$ROOT/scripts/verify_checklist.py" "$@"

@@ -1,0 +1,13 @@
+---
+description: Refuse Done without verify-handoff gates and versioned CLI checks
+alwaysApply: true
+globs:
+---
+
+Before marking work Done or requesting merge:
+
+1. Read skill `verify-handoff`.
+2. Run `.cursor-plugin/agentic-dev-toolkit/bin/verify-checklist` with applicable gates.
+3. Attach proofs (tests, clippy, screenshots). Fail = no Done.
+
+If UI changed, also apply `visual-quality-gate`. If automation was needed, confirm `no-disposable-scripts`.

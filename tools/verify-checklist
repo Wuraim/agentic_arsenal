@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Alias path documented in AIP-88 (tools/verify-checklist → bin/verify-checklist).
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+exec "$ROOT/bin/verify-checklist" "$@"

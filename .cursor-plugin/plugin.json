@@ -1,0 +1,31 @@
+{
+  "name": "agentic-dev-toolkit",
+  "displayName": "Agentic Dev Toolkit",
+  "version": "0.1.0",
+  "description": "Cross-cutting agent skills and toolbox: web/Rust stacks, FigCraft, visual QA, verify-handoff, no disposable scripts, code-metrics stubs (AIP-88).",
+  "author": {
+    "name": "Wuraim",
+    "url": "https://github.com/Wuraim"
+  },
+  "repository": "https://github.com/Wuraim/agentic-dev-toolkit",
+  "license": "MIT",
+  "keywords": [
+    "skills",
+    "verify",
+    "web-stack",
+    "rust",
+    "figcraft",
+    "metrics",
+    "toolbox"
+  ],
+  "category": "developer-tools",
+  "tags": [
+    "automation",
+    "skills",
+    "verification",
+    "cli"
+  ],
+  "hooks": "./hooks/hooks.json",
+  "skills": "./skills/",
+  "rules": "./rules/"
+}

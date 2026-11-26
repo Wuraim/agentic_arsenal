@@ -1,0 +1,34 @@
+---
+description: Agentic Dev Toolkit — load transverse skills and prefer versioned CLI (AIP-88)
+alwaysApply: true
+---
+
+# Agentic Dev Toolkit
+
+This repository ships the Cursor plugin `.cursor-plugin/agentic-dev-toolkit/`.
+
+## Skills — read before acting
+
+| Trigger | Skill path |
+|---|---|
+| Front / web app work | `skills/web-stack/SKILL.md` |
+| Rust backend / Telegram / DB | `skills/rust-backend/SKILL.md` |
+| FigCraft mockup / designer↔dev | `skills/figcraft-designer-dev/SKILL.md` |
+| Any visual UI change | `skills/visual-quality-gate/SKILL.md` |
+| Before Done / merge | `skills/verify-handoff/SKILL.md` |
+| Any automation need | `skills/no-disposable-scripts/SKILL.md` |
+| Measuring task signals | `skills/code-metrics/SKILL.md` |
+
+Paths are relative to `.cursor-plugin/agentic-dev-toolkit/`.
+
+## Hard rules
+
+1. **Verify before Done** — run applicable gates; call `bin/verify-checklist`.
+2. **No disposable scripts** — use `bin/` / `tools/` / repo CLI; extend them in-repo instead of `/tmp` bash.
+3. **Do not reactivate Hindsight** — that plugin stays disabled (AIP-82).
+4. Prefer toolbox bins under this plugin over one-off shell.
+
+## Toolbox entry points
+
+- `.cursor-plugin/agentic-dev-toolkit/bin/verify-checklist`
+- `.cursor-plugin/agentic-dev-toolkit/bin/metrics-append`

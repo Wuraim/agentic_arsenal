@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Versioned toolbox entry: append code-metrics JSONL (safe no-op without store).
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+exec python3 "$ROOT/scripts/metrics_append.py" "$@"
