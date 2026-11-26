@@ -24,8 +24,7 @@ Paths are relative to this plugin root (or `.cursor-plugin/agentic-dev-toolkit/`
 
 1. **Verify before Done** — run applicable gates; call `bin/verify-checklist`. Fill gate criteria from the stack/design SoT stated in context.
 2. **No disposable scripts** — use `bin/` / `tools/` / repo CLI; extend them in-repo instead of `/tmp` bash.
-3. **Do not reactivate Hindsight** — that plugin stays disabled (AIP-82).
-4. Prefer toolbox bins under this plugin over one-off shell.
+3. Prefer toolbox bins under this plugin over one-off shell.
 
 ## Toolbox entry points
 

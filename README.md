@@ -4,7 +4,7 @@ Cross-cutting skills, rules, hooks, and a minimal versioned CLI for agentic
 workflows (AIP-88).
 
 Standalone Cursor plugin repository — install by cloning or adding as a Cursor
-plugin source. Does **not** include or reactivate Hindsight.
+plugin source.
 
 Personal tech stacks and product-specific design tools are **not** baked into
 this plugin; supply them as conversation context when needed.
