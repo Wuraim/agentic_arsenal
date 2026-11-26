@@ -58,7 +58,7 @@ Configure path via env `AGENTIC_METRICS_STORE` or plugin `settings.json` → `me
 ## How to append (plugin stub)
 
 ```bash
-.cursor-plugin/agentic-dev-toolkit/bin/metrics-append \
+./bin/metrics-append \
   --task-id AIP-88 \
   --role coordinator \
   --task-kind other \
@@ -66,6 +66,11 @@ Configure path via env `AGENTIC_METRICS_STORE` or plugin `settings.json` → `me
   --success true
 ```
 
-Or call `scripts/metrics_append.py` with the same flags / a JSON payload on stdin.
+Or pipe a full JSON event (no task flags required):
+
+```bash
+echo '{"task_id":"AIP-88","role":"coordinator","task_kind":"other","success":true}' \
+  | ./bin/metrics-append --stdin
+```
 
 Hooks in this plugin are intentionally empty stubs until a store path is configured — agents must still follow these conventions when recording manually.

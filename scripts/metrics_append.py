@@ -69,9 +69,21 @@ def main() -> int:
         description="Append a code-metrics JSONL event (no-op if store unset)."
     )
     parser.add_argument("--store", default=None, help="Directory or .jsonl file path")
-    parser.add_argument("--task-id", required=True)
-    parser.add_argument("--role", required=True)
-    parser.add_argument("--task-kind", required=True)
+    parser.add_argument(
+        "--task-id",
+        default=None,
+        help="Required unless --stdin provides the event JSON",
+    )
+    parser.add_argument(
+        "--role",
+        default=None,
+        help="Required unless --stdin provides the event JSON",
+    )
+    parser.add_argument(
+        "--task-kind",
+        default=None,
+        help="Required unless --stdin provides the event JSON",
+    )
     parser.add_argument("--model", default="unknown")
     parser.add_argument("--latency-ms", type=int, default=None)
     parser.add_argument("--cost-est", type=float, default=None)
@@ -88,6 +100,22 @@ def main() -> int:
         help="Read a full JSON event from stdin (overrides flag fields except store)",
     )
     args = parser.parse_args()
+
+    if not args.stdin:
+        missing = [
+            flag
+            for flag, val in (
+                ("--task-id", args.task_id),
+                ("--role", args.role),
+                ("--task-kind", args.task_kind),
+            )
+            if not val
+        ]
+        if missing:
+            parser.error(
+                "the following arguments are required unless --stdin: "
+                + ", ".join(missing)
+            )
 
     store = resolve_store_path(args.store)
     if store is None:
