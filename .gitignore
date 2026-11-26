@@ -1,0 +1,8 @@
+# Local performance metrics (file store; DB/network later)
+metrics/*.jsonl
+!metrics/.gitkeep
+
+# Python
+scripts/__pycache__/
+**/__pycache__/
+*.py[cod]

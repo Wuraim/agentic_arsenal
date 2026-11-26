@@ -1,5 +1,5 @@
 {
-  "metricsStorePath": "",
+  "metricsStorePath": "./metrics",
   "metricsEnabled": true,
   "verifyChecklistStrict": true
 }

@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Alias path: tools/metrics-summarize → bin/metrics-summarize.
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+exec "$ROOT/bin/metrics-summarize" "$@"

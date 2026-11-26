@@ -1,10 +1,13 @@
 # Agentic Dev Toolkit (Cursor plugin)
 
-Cross-cutting skills, rules, and a minimal versioned CLI for agentic workflows
-(AIP-88).
+Cross-cutting skills, rules, hooks, and a minimal versioned CLI for agentic
+workflows (AIP-88).
 
 Standalone Cursor plugin repository — install by cloning or adding as a Cursor
 plugin source. Does **not** include or reactivate Hindsight.
+
+Personal tech stacks and product-specific design tools are **not** baked into
+this plugin; supply them as conversation context when needed.
 
 ## Layout
 
@@ -15,8 +18,9 @@ plugin source. Does **not** include or reactivate Hindsight.
 ├── skills/                      # SKILL.md per domain
 ├── scripts/                     # Python implementations (metrics, checklist)
 ├── bin/                         # stable CLI entry points for agents
-├── tools/                       # documented aliases (verify-checklist)
-├── hooks/hooks.json             # empty stubs (metrics hooks later)
+├── tools/                       # documented aliases
+├── hooks/                       # stop + subagentStop → JSONL metrics
+├── metrics/                     # default JSONL store (*.jsonl gitignored)
 └── settings.json                # metricsStorePath, flags
 ```
 
@@ -24,13 +28,10 @@ plugin source. Does **not** include or reactivate Hindsight.
 
 | Skill | Trigger |
 |---|---|
-| `web-stack` | Front / web app (Nuxt/Vite/TS/PNPM/Vitest/Prettier) |
-| `rust-backend` | Rust + Tokio/SQLx/Teloxide; check + clippy |
-| `figcraft-designer-dev` | FigCraft mockups, designer↔dev comments |
-| `visual-quality-gate` | Any visual UI change — proof required |
-| `verify-handoff` | Before Done — gates G0–G6 |
+| `visual-quality-gate` | Any visual UI change — proof vs design SoT from context |
+| `verify-handoff` | Before Done — gates G0–G6 (criteria from context) |
 | `no-disposable-scripts` | Prefer versioned CLI over `/tmp` bash |
-| `code-metrics` | Conventions + JSONL append via plugin stubs |
+| `code-metrics` | Conventions + JSONL append/summarize; hooks auto-record |
 
 ## Install / activate in Cursor
 
@@ -49,14 +50,30 @@ Copy or submodule this tree to `.cursor-plugin/agentic-dev-toolkit/` in the
 target repo (same layout). CLI paths then become
 `.cursor-plugin/agentic-dev-toolkit/bin/…`.
 
-Optional metrics store:
+## Metrics store
+
+Default: `./metrics` (daily `metrics-YYYY-MM-DD.jsonl` under the plugin root).
 
 ```bash
 export AGENTIC_METRICS_STORE="/path/to/store/or/metrics.jsonl"
 # or edit settings.json → "metricsStorePath"
 ```
 
-Without a store, `metrics-append` is a **safe no-op** (exit 0).
+Set `"metricsEnabled": false` in `settings.json` to disable writes. File store
+only for now; a database / network sink can replace the append path later.
+
+Without a store (and with metrics enabled), `metrics-append` is a **safe no-op**
+only if `metricsStorePath` is cleared.
+
+## Hooks
+
+`hooks/hooks.json` records performance on:
+
+- `stop` — end of an agent loop
+- `subagentStop` — end of a Task subagent
+
+Scripts map Cursor payloads (model, duration, status, subagent type) into the
+code-metrics JSONL schema. `cost_est` stays null (hooks do not expose tokens).
 
 ## CLI toolbox (versioned — use these)
 
@@ -69,7 +86,7 @@ Pre-Done gate status. Agents must call this (or document equivalent) before Done
 
 ./bin/verify-checklist \
   --task-id AIP-88 \
-  --role dev-front \
+  --role implement \
   --gates G0,G1,G2,G3,G5,G6 \
   --status G0=pass,G1=pass,G2=pass,G3=pass,G5=pass,G6=pass
 
@@ -89,4 +106,17 @@ Append one JSONL metrics event (see skill `code-metrics`).
   --task-kind other \
   --model composer \
   --success true
+```
+
+### `metrics-summarize`
+
+Aggregate JSONL by `task_kind` / model for **opt-in** routing before spawn.
+Hooks cannot set the model on spawn; the coordinator reads this and passes
+`model` to the Task tool when data is thick enough.
+
+```bash
+./bin/metrics-summarize --task-kind explore
+./bin/metrics-summarize --json --min-samples 3
+
+# also: ./tools/metrics-summarize (alias)
 ```

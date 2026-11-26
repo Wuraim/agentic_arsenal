@@ -1,4 +1,15 @@
 {
   "version": 1,
-  "hooks": {}
+  "hooks": {
+    "stop": [
+      {
+        "command": "python3 ./hooks/record-stop.py"
+      }
+    ],
+    "subagentStop": [
+      {
+        "command": "python3 ./hooks/record-subagent-stop.py"
+      }
+    ]
+  }
 }
