@@ -15,7 +15,7 @@ Any visual code change: layout, CSS, UI components.
 ## Rules
 
 - Verification is **mandatory** by visual comparison code ↔ **design source of truth from context** (screenshots / recording), not code review alone.
-- Design SoT path/tooling comes from the conversation (mockup, Figma export, FigCraft, static spec, etc.) — do not assume a single product.
+- Design SoT path/tooling comes from the conversation (mockup, Figma export, FigCraft, static spec, etc.) — do not assume a single product. See `design-source-access`.
 - Mockup gap: **fix** or **document** + escalate to the design owner named in context.
 - No merge / handoff as « done UI » without **attached visual proof**.
 

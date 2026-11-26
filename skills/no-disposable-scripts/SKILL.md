@@ -33,4 +33,5 @@ If an agent writes more than ~15 lines of bash for a reproducible need → **pro
 ## Plugin toolbox entry points
 
 - `bin/verify-checklist` — pre-Done gate checklist
-- `scripts/metrics_append.py` — append a code-metrics JSONL event (no-op safe without store)
+- `bin/metrics-append` / `bin/metrics-summarize` — code-metrics JSONL
+- For a **project-specific** verify tool, follow skill `create-verify-cli`
