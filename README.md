@@ -1,14 +1,15 @@
 # Agentic Dev Toolkit (Cursor plugin)
 
 Cross-cutting skills, rules, and a minimal versioned CLI for agentic workflows
-(AIP-88 / docs `skills-workflow-from-vault.md`).
+(AIP-88).
 
-Does **not** reactivate Hindsight (AIP-82) — that plugin stays disabled.
+Standalone Cursor plugin repository — install by cloning or adding as a Cursor
+plugin source. Does **not** include or reactivate Hindsight.
 
 ## Layout
 
 ```
-.cursor-plugin/agentic-dev-toolkit/
+.
 ├── .cursor-plugin/plugin.json   # displayName, description, skills/rules/hooks
 ├── rules/                       # always-apply mdc → skills + verify before Done
 ├── skills/                      # SKILL.md per domain
@@ -33,16 +34,22 @@ Does **not** reactivate Hindsight (AIP-82) — that plugin stays disabled.
 
 ## Install / activate in Cursor
 
-1. Open this repository in Cursor (or add it as a workspace folder).
-2. Cursor discovers plugins under `.cursor-plugin/<name>/` when the plugin
-   manifest is present at `.cursor-plugin/plugin.json` inside that folder.
-3. Confirm the plugin shows as **Agentic Dev Toolkit** in Cursor plugin settings
-   and enable it for the workspace if prompted.
+### As a dedicated plugin repo
+
+1. Clone this repository (or add it as a Cursor plugin / workspace folder).
+2. Cursor reads `.cursor-plugin/plugin.json` at the plugin root.
+3. Confirm **Agentic Dev Toolkit** in Cursor plugin settings and enable it.
 4. Rules under `rules/*.mdc` apply automatically (`alwaysApply: true`).
 5. Agents should **read the matching `skills/*/SKILL.md` before acting**, and
    call the toolbox bins below instead of disposable shell scripts.
 
-Optional: set a metrics store path so appends persist:
+### Vendored under another project
+
+Copy or submodule this tree to `.cursor-plugin/agentic-dev-toolkit/` in the
+target repo (same layout). CLI paths then become
+`.cursor-plugin/agentic-dev-toolkit/bin/…`.
+
+Optional metrics store:
 
 ```bash
 export AGENTIC_METRICS_STORE="/path/to/store/or/metrics.jsonl"
@@ -58,15 +65,15 @@ Without a store, `metrics-append` is a **safe no-op** (exit 0).
 Pre-Done gate status. Agents must call this (or document equivalent) before Done.
 
 ```bash
-.cursor-plugin/agentic-dev-toolkit/bin/verify-checklist --list
+./bin/verify-checklist --list
 
-.cursor-plugin/agentic-dev-toolkit/bin/verify-checklist \
+./bin/verify-checklist \
   --task-id AIP-88 \
   --role dev-front \
   --gates G0,G1,G2,G3,G5,G6 \
   --status G0=pass,G1=pass,G2=pass,G3=pass,G5=pass,G6=pass
 
-# also: tools/verify-checklist (alias)
+# also: ./tools/verify-checklist (alias)
 ```
 
 Exit codes: `0` ok · `1` fail · `3` pending · `2` usage error.
@@ -76,14 +83,10 @@ Exit codes: `0` ok · `1` fail · `3` pending · `2` usage error.
 Append one JSONL metrics event (see skill `code-metrics`).
 
 ```bash
-.cursor-plugin/agentic-dev-toolkit/bin/metrics-append \
+./bin/metrics-append \
   --task-id AIP-88 \
   --role coordinator \
   --task-kind other \
   --model composer \
   --success true
 ```
-
-## Hindsight
-
-Do **not** enable or rely on `.cursor-plugin/hindsight-memory/`. It remains disabled.
