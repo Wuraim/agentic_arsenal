@@ -7,7 +7,9 @@ Standalone Cursor plugin repository — install by cloning or adding as a Cursor
 plugin source. Does **not** include or reactivate Hindsight.
 
 Personal tech stacks and product-specific design tools are **not** baked into
-this plugin; supply them as conversation context when needed.
+this plugin. Capture them in the **consumer repo** with skill
+`create-project-skill` (writes `.cursor/skills/…`), or supply them as
+conversation context when needed.
 
 ## Layout
 
@@ -32,6 +34,7 @@ this plugin; supply them as conversation context when needed.
 | `verify-handoff` | Before Done — gates G0–G6 (criteria from context) |
 | `no-disposable-scripts` | Prefer versioned CLI over `/tmp` bash |
 | `code-metrics` | Conventions + JSONL append/summarize; hooks auto-record |
+| `create-project-skill` | Author stack/workflow skills in a **consumer** repo (`.cursor/skills/`) |
 
 ## Install / activate in Cursor
 

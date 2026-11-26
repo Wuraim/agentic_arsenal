@@ -15,8 +15,9 @@ This repository ships the Cursor plugin Agentic Dev Toolkit (see `.cursor-plugin
 | Before Done / merge | `skills/verify-handoff/SKILL.md` |
 | Any automation need | `skills/no-disposable-scripts/SKILL.md` |
 | Measuring task signals / model routing data | `skills/code-metrics/SKILL.md` |
+| Create/update a skill in a consumer repo | `skills/create-project-skill/SKILL.md` |
 
-Stack-specific conventions (languages, frameworks, design tools) come from **conversation context**, not shareable plugin skills.
+Stack-specific conventions (languages, frameworks, design tools) belong in the **consumer repo** as project-local skills (`.cursor/skills/…`) or conversation context — not in this shareable plugin. Use `create-project-skill` to author them.
 
 Paths are relative to this plugin root (or `.cursor-plugin/agentic-dev-toolkit/` when vendored).
 

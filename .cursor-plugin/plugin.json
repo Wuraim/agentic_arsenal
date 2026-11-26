@@ -1,8 +1,8 @@
 {
   "name": "agentic-dev-toolkit",
   "displayName": "Agentic Dev Toolkit",
-  "version": "0.2.0",
-  "description": "Cross-cutting agent skills and toolbox: verify-handoff, visual QA, no disposable scripts, code-metrics hooks and summarize CLI (AIP-88).",
+  "version": "0.2.1",
+  "description": "Cross-cutting agent skills and toolbox: verify-handoff, visual QA, create-project-skill, no disposable scripts, code-metrics hooks and summarize CLI (AIP-88).",
   "author": {
     "name": "Wuraim",
     "url": "https://github.com/Wuraim"
