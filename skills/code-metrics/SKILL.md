@@ -2,48 +2,50 @@
 name: code-metrics
 description: >
   Conventions for collecting model performance signals by task kind (quality,
-  latency, cost, success). Documents when to measure and where to store JSONL.
-  Writing is done via plugin scripts/hooks stubs — not ad hoc files.
+  latency, cost, success). Hooks append JSONL automatically; coordinators may
+  run metrics-summarize before spawning to pick a model from data.
 ---
 
 # Code metrics (conventions)
 
 ## Purpose
 
-Collect performance signals **by task type** to feed model routing later. This skill defines **when** and **what** to measure; durable writes go through the plugin stubs (`scripts/metrics_append.py`), not ad hoc files.
+Collect performance signals **by task type** to feed model routing later. Durable writes go through the plugin stubs (`scripts/metrics_append.py` / hooks), not ad hoc files.
 
 ## Dimensions
 
 | Dimension | Example signals |
 |---|---|
 | Quality | Visual QA score, mockup gaps, human review OK/KO |
-| Latency | Wall-clock duration of task / sub-agent |
-| Cost | Tokens in/out, model slug, credit estimate |
-| Success | CI green, clippy/check OK, merge without revert, rework count |
+| Latency | Wall-clock duration of task / sub-agent (`duration_ms` from hooks) |
+| Cost | Tokens in/out, model slug, credit estimate — **usually null from hooks** (Cursor does not expose usage on hook payloads) |
+| Success | Hook status completed vs error/aborted; CI green; rework count |
 
 ## Storage (priority)
 
 | Option | When |
 |---|---|
-| Project store `internal/metrics/` (JSONL or 1 file/day) | Default cloud Project — readable by coordinator + workers |
-| Host KV (`host.kv`) | Agent SDK / runtime with shared session state |
-| Repo `.cursor/metrics/` | Non-sensitive aggregates only; never secrets |
+| Plugin `metrics/` (daily `metrics-YYYY-MM-DD.jsonl`) | **Default** via `settings.json` → `metricsStorePath: "./metrics"` |
+| Env `AGENTIC_METRICS_STORE` | Override path (file `.jsonl` or directory) |
+| Host KV / network / DB | **Future** — not wired yet |
 
-Configure path via env `AGENTIC_METRICS_STORE` or plugin `settings.json` → `metricsStorePath`. If unset / missing, the append script is a **safe no-op** (exit 0, logs skip).
+Relative store paths resolve against the plugin root (`CURSOR_PLUGIN_ROOT` or the repo that contains `scripts/`). If `metricsEnabled` is false, append is a safe no-op.
 
 ## Minimal event schema (one JSON object per line)
+
+`role` and `task_kind` are open strings. Examples: `role` = `agent|subagent|coordinator|review`; `task_kind` = `explore|implement|review|shell|browser|docs|other`.
 
 ```json
 {
   "ts": "ISO-8601",
-  "task_id": "AIP-…",
-  "role": "designer|dev-front|dev-back|visual-qa|coordinator|triage",
-  "task_kind": "figcraft|ui-impl|rust|visual-qa|triage|other",
+  "task_id": "conversation-or-task-id",
+  "role": "agent|subagent|coordinator|…",
+  "task_kind": "explore|implement|review|other",
   "model": "model-slug",
   "latency_ms": 0,
   "cost_est": null,
   "success": true,
-  "signals": { "ci": true, "clippy": true, "visual_qa": "ok|fail|skip", "rework": 0 }
+  "signals": { "hook": "stop|subagentStop", "status": "completed" }
 }
 ```
 
@@ -51,11 +53,21 @@ Configure path via env `AGENTIC_METRICS_STORE` or plugin `settings.json` → `me
 
 | Author | Moment |
 |---|---|
-| Hook / script post-task | End of sub-agent run — automatic when wired |
-| Visual QA / Quality | After gate G3: `visual_qa` + optional rework |
-| Coordinator | Aggregate / manual correction; read before spawn |
+| Hook `stop` / `subagentStop` | End of agent loop or Task subagent — automatic via `hooks/hooks.json` |
+| Manual / Visual QA | After a gate: optional `signals` + rework |
+| Coordinator | Aggregate / correction; **may** read summarize before spawn |
 
-## How to append (plugin stub)
+## Opt-in routing before spawn (2A)
+
+Hooks **cannot** override the model on `subagentStart` (allow/deny only). Before spawning a Task subagent, the coordinator **may**:
+
+```bash
+./bin/metrics-summarize --task-kind explore --json
+```
+
+Pick `recommended_model` when sample count is enough; if thin data, fall back to `inherit` or an explicit user choice. Passing `model` on the Task tool is how routing actually happens.
+
+## How to append (manual)
 
 ```bash
 ./bin/metrics-append \
@@ -66,11 +78,9 @@ Configure path via env `AGENTIC_METRICS_STORE` or plugin `settings.json` → `me
   --success true
 ```
 
-Or pipe a full JSON event (no task flags required):
+Or pipe a full JSON event:
 
 ```bash
 echo '{"task_id":"AIP-88","role":"coordinator","task_kind":"other","success":true}' \
   | ./bin/metrics-append --stdin
 ```
-
-Hooks in this plugin are intentionally empty stubs until a store path is configured — agents must still follow these conventions when recording manually.

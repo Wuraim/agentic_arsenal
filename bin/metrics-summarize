@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Versioned toolbox entry: summarize code-metrics JSONL for model routing.
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+exec python3 "$ROOT/scripts/metrics_summarize.py" "$@"

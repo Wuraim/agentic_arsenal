@@ -1,34 +1,17 @@
 #!/usr/bin/env python3
-"""Append one code-metrics JSONL event. Safe no-op if store path is unset/missing."""
+"""Append one code-metrics JSONL event. Safe no-op if store unset or disabled."""
 
 from __future__ import annotations
 
 import argparse
 import json
-import os
 import sys
-from datetime import datetime, timezone
 from pathlib import Path
 
+# Allow `python3 scripts/metrics_append.py` without install.
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-def resolve_store_path(explicit: str | None) -> Path | None:
-    raw = (
-        explicit
-        or os.environ.get("AGENTIC_METRICS_STORE")
-        or os.environ.get("AGENTIC_DEV_TOOLKIT_METRICS_STORE")
-        or ""
-    ).strip()
-    if not raw:
-        settings = Path(__file__).resolve().parent.parent / "settings.json"
-        if settings.is_file():
-            try:
-                data = json.loads(settings.read_text(encoding="utf-8"))
-                raw = (data.get("metricsStorePath") or "").strip()
-            except (OSError, json.JSONDecodeError):
-                raw = ""
-    if not raw:
-        return None
-    return Path(raw).expanduser()
+from metrics_lib import append_event, utc_now_iso  # noqa: E402
 
 
 def build_event(args: argparse.Namespace) -> dict:
@@ -43,7 +26,7 @@ def build_event(args: argparse.Namespace) -> dict:
             sys.exit(2)
 
     event = {
-        "ts": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+        "ts": utc_now_iso(),
         "task_id": args.task_id,
         "role": args.role,
         "task_kind": args.task_kind,
@@ -66,7 +49,7 @@ def build_event(args: argparse.Namespace) -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser(
-        description="Append a code-metrics JSONL event (no-op if store unset)."
+        description="Append a code-metrics JSONL event (no-op if store unset/disabled)."
     )
     parser.add_argument("--store", default=None, help="Directory or .jsonl file path")
     parser.add_argument(
@@ -117,14 +100,11 @@ def main() -> int:
                 + ", ".join(missing)
             )
 
-    store = resolve_store_path(args.store)
-    if store is None:
-        print(
-            "metrics_append: no store configured "
-            "(AGENTIC_METRICS_STORE / settings.metricsStorePath) — skip (no-op)",
-            file=sys.stderr,
-        )
-        return 0
+    store = None
+    if args.store:
+        from metrics_lib import resolve_store_path
+
+        store = resolve_store_path(args.store)
 
     if args.stdin:
         try:
@@ -135,23 +115,13 @@ def main() -> int:
         if not isinstance(event, dict):
             print("metrics_append: stdin must be a JSON object", file=sys.stderr)
             return 2
-        event.setdefault(
-            "ts", datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
-        )
+        event.setdefault("ts", utc_now_iso())
     else:
         event = build_event(args)
 
-    if store.suffix == ".jsonl":
-        path = store
-        path.parent.mkdir(parents=True, exist_ok=True)
-    else:
-        store.mkdir(parents=True, exist_ok=True)
-        day = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-        path = store / f"metrics-{day}.jsonl"
-
-    line = json.dumps(event, ensure_ascii=False, separators=(",", ":"))
-    with path.open("a", encoding="utf-8") as fh:
-        fh.write(line + "\n")
+    path = append_event(event, store=store)
+    if path is None:
+        return 0
     print(f"metrics_append: wrote → {path}")
     return 0
 

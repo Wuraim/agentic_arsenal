@@ -5,30 +5,30 @@ alwaysApply: true
 
 # Agentic Dev Toolkit
 
-This repository ships the Cursor plugin `.cursor-plugin/agentic-dev-toolkit/`.
+This repository ships the Cursor plugin Agentic Dev Toolkit (see `.cursor-plugin/plugin.json`).
 
 ## Skills — read before acting
 
 | Trigger | Skill path |
 |---|---|
-| Front / web app work | `skills/web-stack/SKILL.md` |
-| Rust backend / Telegram / DB | `skills/rust-backend/SKILL.md` |
-| FigCraft mockup / designer↔dev | `skills/figcraft-designer-dev/SKILL.md` |
 | Any visual UI change | `skills/visual-quality-gate/SKILL.md` |
 | Before Done / merge | `skills/verify-handoff/SKILL.md` |
 | Any automation need | `skills/no-disposable-scripts/SKILL.md` |
-| Measuring task signals | `skills/code-metrics/SKILL.md` |
+| Measuring task signals / model routing data | `skills/code-metrics/SKILL.md` |
 
-Paths are relative to `.cursor-plugin/agentic-dev-toolkit/`.
+Stack-specific conventions (languages, frameworks, design tools) come from **conversation context**, not shareable plugin skills.
+
+Paths are relative to this plugin root (or `.cursor-plugin/agentic-dev-toolkit/` when vendored).
 
 ## Hard rules
 
-1. **Verify before Done** — run applicable gates; call `bin/verify-checklist`.
+1. **Verify before Done** — run applicable gates; call `bin/verify-checklist`. Fill gate criteria from the stack/design SoT stated in context.
 2. **No disposable scripts** — use `bin/` / `tools/` / repo CLI; extend them in-repo instead of `/tmp` bash.
 3. **Do not reactivate Hindsight** — that plugin stays disabled (AIP-82).
 4. Prefer toolbox bins under this plugin over one-off shell.
 
 ## Toolbox entry points
 
-- `.cursor-plugin/agentic-dev-toolkit/bin/verify-checklist`
-- `.cursor-plugin/agentic-dev-toolkit/bin/metrics-append`
+- `bin/verify-checklist` (alias: `tools/verify-checklist`)
+- `bin/metrics-append` (alias: `tools/metrics-append`)
+- `bin/metrics-summarize` (alias: `tools/metrics-summarize`) — optional before spawn to pick a model from JSONL

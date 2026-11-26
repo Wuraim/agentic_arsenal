@@ -11,11 +11,11 @@ from datetime import datetime, timezone
 ALL_GATES = ("G0", "G1", "G2", "G3", "G4", "G5", "G6")
 
 GATE_HELP = {
-    "G0": "Maquette — FigCraft file present and versioned before UI code",
-    "G1": "Commentaires — designer comments read; open Qs resolved or designer woken",
-    "G2": "Stack — front Prettier/Vitest or back clippy without allow/unsafe",
-    "G3": "Visuel — mockup ↔ implementation visual proof attached",
-    "G4": "Rust — cargo check + clippy green",
+    "G0": "Design SoT — mockup/spec from context present and versioned when UI in scope",
+    "G1": "Feedback — design feedback / open questions resolved or escalated",
+    "G2": "Stack conventions — declared stack + format/lint/test from context followed",
+    "G3": "Visual — design SoT ↔ implementation visual proof attached",
+    "G4": "Backend checks — typecheck/lint/build green when backend changed (tooling from context)",
     "G5": "Verify — applicable verify skills ran; proofs attached",
     "G6": "Toolbox — no disposable scripts; versioned CLI used",
 }
