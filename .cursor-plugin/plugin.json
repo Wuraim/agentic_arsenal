@@ -1,8 +1,8 @@
 {
   "name": "agentic-dev-toolkit",
   "displayName": "Agentic Dev Toolkit",
-  "version": "0.3.0",
-  "description": "Cross-cutting agent skills and toolbox: design access, code quality, verify CLI authoring, visual QA, verify-handoff, code-metrics hooks (AIP-88).",
+  "version": "0.4.0",
+  "description": "Cross-cutting agent skills and toolbox: design access (FigCraft live collab), code quality, verify CLI authoring, visual QA, verify-handoff, code-metrics hooks (AIP-88).",
   "author": {
     "name": "Wuraim",
     "url": "https://github.com/Wuraim"
