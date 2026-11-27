@@ -32,7 +32,9 @@ that context.
 
 | Skill | Trigger |
 |---|---|
-| `design-source-access` | Locate/use design SoT (Figma, FigCraft, mockups, … from context) |
+| `design-source-access` | Locate/use design SoT (Figma, FigCraft, mockups, … from context); live vs versioned |
+| `figcraft-designer-dev` | FigCraft maquette / designer↔dev; **live collab first** when owner must see edits immediately |
+| `figcraft-comments` | FigCraft mockup comments — resolve or escalate (G1) |
 | `visual-quality-gate` | Any visual UI change — proof vs design SoT |
 | `code-quality` | Lint/format/typecheck/tests — commands from context |
 | `verify-handoff` | Before Done — gates G0–G6 |

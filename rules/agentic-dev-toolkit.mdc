@@ -12,6 +12,8 @@ This repository ships the Cursor plugin Agentic Dev Toolkit (see `.cursor-plugin
 | Trigger | Skill path |
 |---|---|
 | Design SoT / mockup access (Figma, FigCraft, …) | `skills/design-source-access/SKILL.md` |
+| FigCraft maquette edit / designer↔dev | `skills/figcraft-designer-dev/SKILL.md` |
+| FigCraft comments (G1) | `skills/figcraft-comments/SKILL.md` |
 | Any visual UI change | `skills/visual-quality-gate/SKILL.md` |
 | Lint/format/typecheck/tests for this project | `skills/code-quality/SKILL.md` |
 | Before Done / merge | `skills/verify-handoff/SKILL.md` |
@@ -20,6 +22,8 @@ This repository ships the Cursor plugin Agentic Dev Toolkit (see `.cursor-plugin
 | Measuring task signals / model routing data | `skills/code-metrics/SKILL.md` |
 
 Concrete toolchains (exact design product, package manager, linters) come from **conversation or consumer-repo context**. These skills define the process cards; they do not hardcode one stack.
+
+**FigCraft live override:** when context says the owner must see mockup edits immediately, edit via **live collab** (host + file id from context) — not only the versioned `.figcraft`. See `figcraft-designer-dev`.
 
 Paths are relative to this plugin root (or `.cursor-plugin/agentic-dev-toolkit/` when vendored).
 
