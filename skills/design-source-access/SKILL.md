@@ -50,7 +50,7 @@ FigCraft example (values from project context — AI Plan): host `wss://figcraft
 2. Default: prefer the **versioned** locator for Quality compare and durable SoT.
 3. When immediacy is required: edit via **live collab** first (see override above).
 4. Read open design comments; resolve or escalate (gate **G1**). For FigCraft use `figcraft-comments`.
-5. For visual Done: compare implementation to this SoT and attach proof (`visual-quality-gate`, gate **G3**).
+5. For visual Done: compare implementation to this SoT and attach proof across desktop+mobile and light+dark when applicable (`visual-quality-gate`, gate **G3**).
 6. Mockup gap: fix (live if immediacy required), or document + notify the owner from the access card.
 
 ## Anti-patterns

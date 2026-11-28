@@ -26,7 +26,7 @@ Fill each applicable criterion from **conversation context** (declared stack, li
 | **G0 Design SoT** | When UI is in scope: design source of truth from context is present. Prefer a **versioned** locator for durable SoT; when prefs require owner **immediate** mockup visibility, live collab SoT satisfies G0 for the UX edit (sync versioned later). See `design-source-access` / `figcraft-designer-dev`. |
 | **G1 Feedback** | Design feedback / open questions resolved, or escalated with an open thread (`figcraft-comments` when FigCraft). |
 | **G2 Stack conventions** | Declared project stack + format/lint/test conventions from context were followed. |
-| **G3 Visual** | For UI changes: visual proof attached (screenshot/recording vs design SoT). |
+| **G3 Visual** | For UI changes: visual proof attached (screenshot/recording vs design SoT) across **desktop + mobile**, and **light + dark** when the product has a theme toggle (document N/A for dark otherwise). See `visual-quality-gate`. |
 | **G4 Backend checks** | When backend changed: typecheck/lint/build green using tooling named in context. |
 | **G5 Verify** | Applicable verify skills ran; proofs attached. |
 | **G6 Toolbox** | No disposable scripts; actions via versioned CLI/toolbox (or CLI added in the same deliverable). |

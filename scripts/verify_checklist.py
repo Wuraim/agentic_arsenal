@@ -14,7 +14,7 @@ GATE_HELP = {
     "G0": "Design SoT — mockup/spec from context present (versioned preferred; live collab OK when immediacy required)",
     "G1": "Feedback — design feedback / open questions resolved or escalated",
     "G2": "Stack conventions — declared stack + format/lint/test from context followed",
-    "G3": "Visual — design SoT ↔ implementation visual proof attached",
+    "G3": "Visual — design SoT ↔ implementation proof (desktop+mobile; light+dark or N/A)",
     "G4": "Backend checks — typecheck/lint/build green when backend changed (tooling from context)",
     "G5": "Verify — applicable verify skills ran; proofs attached",
     "G6": "Toolbox — no disposable scripts; versioned CLI used",

@@ -10,4 +10,4 @@ Before marking work Done or requesting merge:
 2. Run `.cursor-plugin/agentic-dev-toolkit/bin/verify-checklist` with applicable gates.
 3. Attach proofs (tests, lint/typecheck logs, screenshots). Fail = no Done.
 
-If UI changed, also apply `visual-quality-gate`. If automation was needed, confirm `no-disposable-scripts`.
+If UI changed, also apply `visual-quality-gate` (desktop+mobile; light+dark or documented N/A). If automation was needed, confirm `no-disposable-scripts`.
