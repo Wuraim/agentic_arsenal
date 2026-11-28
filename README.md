@@ -35,7 +35,7 @@ that context.
 | `design-source-access` | Locate/use design SoT (Figma, FigCraft, mockups, … from context); live vs versioned |
 | `figcraft-designer-dev` | FigCraft maquette / designer↔dev; **live collab first** when owner must see edits immediately |
 | `figcraft-comments` | FigCraft mockup comments — resolve or escalate (G1) |
-| `visual-quality-gate` | Any visual UI change — proof vs design SoT |
+| `visual-quality-gate` | Any visual UI change — proof vs design SoT (desktop+mobile; light+dark or N/A) |
 | `code-quality` | Lint/format/typecheck/tests — commands from context |
 | `verify-handoff` | Before Done — gates G0–G6 |
 | `create-verify-cli` | Author versioned project verify CLI wired to handoff gates |
